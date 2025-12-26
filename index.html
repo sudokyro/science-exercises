@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SciMaster: Global STEM Hub</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Firebase SDK (Version 8 Compat for easiest HTML integration) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <!-- MathJax Configuration -->
+    <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      startup: { typeset: false }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root { --primary: #2c3e50; --sec: #3498db; }
+        body { background: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
+        .navbar { background-color: var(--primary); }
+        .card { transition: 0.3s; border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        .latex-preview { background: #fff; border: 1px solid #ddd; padding: 10px; min-height: 40px; border-radius: 5px; margin-top: 5px; }
+        .latex-btn-group button { font-size: 0.85rem; margin: 1px; }
+        .category-tag { position: absolute; top: 10px; right: 10px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
+        .hidden { display: none !important; }
+        #loading-spinner { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 999; }
+    </style>
+</head>
+<body>
+
+<!-- Loading Spinner -->
+<div id="loading-spinner" class="spinner-border text-primary" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="#"><i class="fas fa-microscope"></i> SciMaster Global</a>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navC">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navC">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link active" onclick="setFilter('All')">All</a></li>
+                <li class="nav-item"><a class="nav-link" onclick="setFilter('Math')">Math</a></li>
+                <li class="nav-item"><a class="nav-link" onclick="setFilter('Physics')">Physics</a></li>
+                <li class="nav-item"><a class="nav-link" onclick="setFilter('Chemistry')">Chemistry</a></li>
+                <li class="nav-item"><a class="nav-link" onclick="setFilter('Biology')">Biology</a></li>
+            </ul>
+            <div class="d-flex align-items-center text-white">
+                <span class="me-3"><i class="fas fa-trophy text-warning"></i> My Points: <b id="display-points">0</b></span>
+                <button class="btn btn-sm btn-outline-light" onclick="toggleAdmin()">Admin</button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Admin Panel -->
+<div class="container mt-3 hidden" id="admin-controls">
+    <div class="card bg-white border-warning">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <h5 class="text-warning mb-0"><i class="fas fa-lock-open"></i> Admin Mode Active</h5>
+            <div>
+                <button class="btn btn-success" onclick="openEditor()">+ New Exercise</button>
+                <button class="btn btn-danger" onclick="logoutAdmin()">Exit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Grid -->
+<div class="container mt-4">
+    <div id="quiz-grid" class="row g-4">
+        <!-- Content loads here from Firebase -->
+    </div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title">Admin Login</h5></div>
+            <div class="modal-body">
+                <input type="password" id="admin-pass" class="form-control" placeholder="Enter Admin Password">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="verifyAdmin()">Login</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Editor Modal -->
+<div class="modal fade" id="editorModal" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title">Create Exercise</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label>Category</label>
+                        <select id="ed-cat" class="form-select">
+                            <option>Math</option><option>Physics</option>
+                            <option>Chemistry</option><option>Biology</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Points</label>
+                        <input type="number" id="ed-pts" class="form-control" value="10">
+                    </div>
+                    
+                    <div class="col-12">
+                        <div class="latex-btn-group mb-2">
+                            <span>Insert: </span>
+                            <button class="btn btn-light border" onclick="addTex('\\frac{a}{b}')">Fraction</button>
+                            <button class="btn btn-light border" onclick="addTex('\\sqrt{x}')">Sqrt</button>
+                            <button class="btn btn-light border" onclick="addTex('x^{2}')">Power</button>
+                            <button class="btn btn-light border" onclick="addTex('\\int')">Integral</button>
+                            <button class="btn btn-light border" onclick="addTex('\\sum')">Sum</button>
+                            <button class="btn btn-light border" onclick="addTex('\\pi')">Pi</button>
+                            <button class="btn btn-light border" onclick="addTex('\\rightarrow')">Arrow</button>
+                            <button class="btn btn-light border" onclick="addTex('\\text{word}')">Text</button>
+                        </div>
+                        <label>Question (LaTeX enabled)</label>
+                        <textarea id="ed-q" class="form-control font-monospace" rows="4" oninput="renderPreview()"></textarea>
+                        <div id="ed-preview" class="latex-preview text-muted">Preview...</div>
+                    </div>
+
+                    <div class="col-12">
+                        <label>Correct Answers (comma separated)</label>
+                        <input type="text" id="ed-ans" class="form-control" placeholder="e.g. 5, five, 5.0">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="uploadExercise()">Upload to Database</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // ---------------------------------------------------------
+    // 1. FIREBASE CONFIGURATION (PASTE YOUR KEYS HERE)
+    // ---------------------------------------------------------
+  const firebaseConfig = {
+  
+    apiKey: "AIzaSyBVp9UP-NNUAAjtB1iBw6Q7YffWZDran8Q",
+  
+    authDomain: "science-exercises.firebaseapp.com",
+  
+    databaseURL: "https://science-exercises-default-rtdb.europe-west1.firebasedatabase.app",
+  
+    projectId: "science-exercises",
+  
+    storageBucket: "science-exercises.firebasestorage.app",
+  
+    messagingSenderId: "592572802756",
+  
+    appId: "1:592572802756:web:51a7e1e55dea98cc950b91",
+  
+    measurementId: "G-H7HW0PYGGW"
+  
+  };
+
+
+    // Initialize Firebase
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // ---------------------------------------------------------
+    // 2. STATE & USER MANAGEMENT
+    // ---------------------------------------------------------
+    let allExercises = [];
+    let isAdmin = false;
+    let currentFilter = 'All';
+    let userPoints = 0;
+    
+    // Create a unique ID for this browser if not exists
+    let userID = localStorage.getItem('sci_uid');
+    if (!userID) {
+        userID = 'user_' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('sci_uid', userID);
+    }
+
+    // ---------------------------------------------------------
+    // 3. CORE LOGIC
+    // ---------------------------------------------------------
+    
+    // STARTUP: Listen to Database Changes
+    window.onload = function() {
+        // Listen for Exercises
+        db.ref('exercises').on('value', (snapshot) => {
+            document.getElementById('loading-spinner').classList.add('hidden');
+            const data = snapshot.val();
+            allExercises = [];
+            if(data) {
+                // Convert object to array
+                Object.keys(data).forEach(key => {
+                    allExercises.push({ id: key, ...data[key] });
+                });
+            }
+            renderGrid();
+        });
+
+        // Listen for User Points (specific to this userID)
+        db.ref('users/' + userID + '/points').on('value', (snap) => {
+            userPoints = snap.val() || 0;
+            document.getElementById('display-points').innerText = userPoints;
+        });
+        
+        // Listen for Solved IDs (to prevent double points)
+        db.ref('users/' + userID + '/solved').on('value', (snap) => {
+            userSolved = snap.val() || {}; // Object of solved IDs
+            renderGrid(); // Re-render to show green borders
+        });
+    };
+
+    let userSolved = {};
+
+    // RENDER: Draw the exercises
+    function renderGrid() {
+        const container = document.getElementById('quiz-grid');
+        container.innerHTML = '';
+        
+        const filtered = currentFilter === 'All' ? allExercises : allExercises.filter(e => e.cat === currentFilter);
+
+        filtered.forEach(ex => {
+            const isSolved = userSolved[ex.id] ? true : false;
+            
+            // Delete button only for admin
+            const adminBtn = isAdmin ? 
+                `<button class="btn btn-sm btn-outline-danger mt-2" onclick="deleteEx('${ex.id}')">Delete</button>
+                 <small class="d-block text-muted mt-1">Ans: ${ex.ans.join(', ')}</small>` : '';
+
+            const html = `
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 ${isSolved ? 'border-success' : ''}">
+                        <div class="card-body">
+                            <span class="badge bg-secondary category-tag">${ex.cat}</span>
+                            <h5 class="card-title">
+                                <span class="badge bg-warning text-dark">${ex.pts} Pts</span>
+                                ${isSolved ? '<i class="fas fa-check-circle text-success ms-2"></i>' : ''}
+                            </h5>
+                            <div class="card-text my-3 p-2 bg-light rounded tex-content">${ex.q}</div>
+                            
+                            ${!isSolved ? `
+                            <div class="input-group">
+                                <input type="text" id="in-${ex.id}" class="form-control" placeholder="Answer...">
+                                <button class="btn btn-primary" onclick="submitAns('${ex.id}')">Check</button>
+                            </div>
+                            ` : '<div class="alert alert-success py-1 mb-0">Completed</div>'}
+                            
+                            ${adminBtn}
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += html;
+        });
+        
+        // Render MathJax
+        MathJax.typesetPromise();
+    }
+
+    // ACTION: Check Answer
+    function submitAns(id) {
+        const input = document.getElementById('in-' + id);
+        const val = input.value.trim().toLowerCase();
+        const exercise = allExercises.find(e => e.id === id);
+
+        const correct = exercise.ans.some(a => a.toLowerCase() === val);
+
+        if(correct) {
+            // Update Database: Add points and mark as solved
+            db.ref('users/' + userID + '/points').set(userPoints + parseInt(exercise.pts));
+            db.ref('users/' + userID + '/solved/' + id).set(true);
+            alert("Correct!");
+        } else {
+            input.classList.add('is-invalid');
+            setTimeout(() => input.classList.remove('is-invalid'), 2000);
+        }
+    }
+
+    // ---------------------------------------------------------
+    // 4. ADMIN & EDITOR FUNCTIONS
+    // ---------------------------------------------------------
+    const ADMIN_PASS = "admin123"; // Simple client-side protection
+
+    function toggleAdmin() {
+        if(isAdmin) return;
+        new bootstrap.Modal(document.getElementById('loginModal')).show();
+    }
+
+    function verifyAdmin() {
+        if(document.getElementById('admin-pass').value === ADMIN_PASS) {
+            isAdmin = true;
+            document.getElementById('admin-controls').classList.remove('hidden');
+            renderGrid();
+            bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
+        } else {
+            alert("Wrong password");
+        }
+    }
+
+    function logoutAdmin() {
+        isAdmin = false;
+        document.getElementById('admin-controls').classList.add('hidden');
+        renderGrid();
+    }
+
+    function openEditor() {
+        new bootstrap.Modal(document.getElementById('editorModal')).show();
+    }
+
+    // Upload new exercise to Firebase
+    function uploadExercise() {
+        const cat = document.getElementById('ed-cat').value;
+        const pts = document.getElementById('ed-pts').value;
+        const q = document.getElementById('ed-q').value;
+        const ansRaw = document.getElementById('ed-ans').value;
+
+        if(!q || !ansRaw) return alert("Fill all fields");
+
+        const ans = ansRaw.split(',').map(s => s.trim());
+
+        // PUSH to Firebase (automatically generates ID)
+        db.ref('exercises').push({
+            cat: cat,
+            pts: pts,
+            q: q,
+            ans: ans,
+            timestamp: Date.now()
+        }, (error) => {
+            if(error) alert("Error: " + error.message);
+            else {
+                bootstrap.Modal.getInstance(document.getElementById('editorModal')).hide();
+                document.getElementById('ed-q').value = '';
+                document.getElementById('ed-ans').value = '';
+                document.getElementById('ed-preview').innerHTML = '';
+            }
+        });
+    }
+
+    function deleteEx(id) {
+        if(confirm("Permanently delete this from the database?")) {
+            db.ref('exercises/' + id).remove();
+        }
+    }
+
+    // Editor Helper: Insert LaTeX
+    function addTex(code) {
+        const field = document.getElementById('ed-q');
+        const start = field.selectionStart;
+        field.value = field.value.substring(0, start) + code + field.value.substring(field.selectionEnd);
+        renderPreview();
+        field.focus();
+    }
+
+    function renderPreview() {
+        const content = document.getElementById('ed-q').value;
+        const p = document.getElementById('ed-preview');
+        p.innerHTML = content;
+        MathJax.typesetPromise([p]);
+    }
+
+    function setFilter(cat) {
+        currentFilter = cat;
+        renderGrid();
+    }
+</script>
+
+</body>
+</html>
