@@ -38,7 +38,6 @@
             --danger: #ef4444;
             --warning: #f59e0b;
             
-            /* Light Mode */
             --bg-primary: #f8fafc;
             --bg-secondary: #ffffff;
             --bg-tertiary: #f1f5f9;
@@ -75,6 +74,119 @@
             font-family: 'Inter', sans-serif;
             padding-bottom: 50px;
             color: var(--text-primary);
+        }
+
+        /* Auth Page Styles */
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .auth-container {
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            overflow: hidden;
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+        }
+
+        .auth-brand {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            padding: 60px 40px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 350px;
+        }
+
+        .auth-brand h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .auth-brand p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .auth-form-container {
+            padding: 60px 50px;
+            flex: 1;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.3s;
+        }
+
+        .auth-tab:hover {
+            color: var(--text-primary);
+        }
+
+        .auth-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-floating {
+            margin-bottom: 20px;
+        }
+
+        .form-floating > .form-control {
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            padding: 1rem 1rem;
+            height: auto;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .form-floating > .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-floating > label {
+            padding: 1rem;
+            color: var(--text-muted);
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
         }
 
         .navbar {
@@ -421,11 +533,6 @@
         .difficulty-medium { border-left: 4px solid #f59e0b; }
         .difficulty-hard { border-left: 4px solid #ef4444; }
 
-        .progress-ring {
-            width: 60px;
-            height: 60px;
-        }
-
         .exercise-meta {
             display: flex;
             gap: 8px;
@@ -442,16 +549,150 @@
             color: var(--text-secondary);
         }
 
-        .streak-display {
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .user-dropdown {
+            position: relative;
+        }
+
+        .user-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow-hover);
+            min-width: 200px;
+            padding: 8px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .user-dropdown-menu.show {
+            display: block;
+        }
+
+        .user-dropdown-item {
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .user-dropdown-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .user-dropdown-item.danger {
+            color: var(--danger);
+        }
+
+        /* User Management Table */
+        .user-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .user-table th {
+            background: var(--bg-tertiary);
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .user-table th:first-child {
+            border-radius: 12px 0 0 12px;
+        }
+
+        .user-table th:last-child {
+            border-radius: 0 12px 12px 0;
+        }
+
+        .user-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        .user-table tr:hover td {
+            background: var(--bg-tertiary);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-details h6 {
+            margin: 0;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .user-details small {
+            color: var(--text-muted);
+        }
+
+        .response-item {
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+        }
+
+        .response-correct {
+            border-left: 4px solid var(--success);
+        }
+
+        .response-incorrect {
+            border-left: 4px solid var(--danger);
+        }
+
+        .admin-badge {
             background: linear-gradient(135deg, #ef4444, #f97316);
             color: white;
-            padding: 6px 14px;
-            border-radius: 50px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
             font-weight: 600;
-            font-size: 0.85rem;
         }
 
         @media (max-width: 768px) {
+            .auth-container {
+                flex-direction: column;
+            }
+            
+            .auth-brand {
+                min-width: auto;
+                padding: 40px 30px;
+            }
+            
+            .auth-form-container {
+                padding: 40px 30px;
+            }
+            
             .latex-toolbar {
                 grid-template-columns: repeat(6, 1fr);
             }
@@ -463,24 +704,6 @@
             .category-tab {
                 flex: 0 0 48%;
             }
-        }
-
-        .glow-effect {
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from { box-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary); }
-            to { box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary); }
-        }
-
-        .solve-animation {
-            animation: celebrate 0.5s ease;
-        }
-
-        @keyframes celebrate {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
         }
 
         .empty-state {
@@ -503,7 +726,6 @@
             color: var(--text-muted);
         }
 
-        /* Scrollbar Styling */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -521,10 +743,42 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--text-muted);
         }
+
+        .solve-animation {
+            animation: celebrate 0.5s ease;
+        }
+
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .points-input {
+            width: 100px;
+            text-align: center;
+        }
+
+        .nav-tabs .nav-link {
+            color: var(--text-secondary);
+            border: none;
+            padding: 12px 20px;
+            font-weight: 500;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: var(--primary);
+            background: transparent;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .nav-tabs {
+            border-bottom: 1px solid var(--border-color);
+        }
     </style>
 </head>
 <body>
 
+    <!-- Loading Overlay -->
     <div id="loading-overlay">
         <div class="text-center">
             <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;"></div>
@@ -535,116 +789,297 @@
     <!-- Toast Container -->
     <div class="toast-container" id="toast-container"></div>
 
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-atom fa-spin me-2"></i>SciMaster
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" href="#" onclick="setMainFilter('All', this); return false;">All</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" onclick="setMainFilter('Math', this); return false;"><i class="fas fa-calculator me-1"></i>Math</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" onclick="setMainFilter('Physics', this); return false;"><i class="fas fa-rocket me-1"></i>Physics</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" onclick="setMainFilter('Chemistry', this); return false;"><i class="fas fa-flask me-1"></i>Chemistry</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" onclick="setMainFilter('Biology', this); return false;"><i class="fas fa-dna me-1"></i>Biology</a></li>
-                </ul>
-                <div class="d-flex align-items-center gap-3">
-                    <div class="streak-display hidden" id="streak-display">
-                        <i class="fas fa-fire"></i> <span id="streak-count">0</span> day streak
+    <!-- Auth Page -->
+    <div id="auth-page" class="auth-page">
+        <div class="auth-container">
+            <div class="auth-brand">
+                <div>
+                    <h1><i class="fas fa-atom fa-spin me-2"></i>SciMaster</h1>
+                    <p>Welcome to the ultimate STEM learning platform. Master Math, Physics, Chemistry, and Biology through interactive exercises.</p>
+                    <div class="mt-4">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-check-circle me-2"></i> Earn points for correct answers
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-check-circle me-2"></i> Track your progress
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check-circle me-2"></i> Compete with others
+                        </div>
                     </div>
-                    <div class="points-display">
-                        <i class="fas fa-trophy"></i> <span id="display-points">0</span>
-                    </div>
-                    <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
-                        <i class="fas fa-moon" id="theme-icon"></i>
-                    </div>
-                    <button class="btn btn-outline-light btn-sm px-3" onclick="toggleAdmin()">
-                        <i class="fas fa-user-shield me-1"></i> Admin
-                    </button>
                 </div>
             </div>
-        </div>
-    </nav>
+            <div class="auth-form-container">
+                <div class="auth-tabs">
+                    <div class="auth-tab active" onclick="switchAuthTab('login')">Sign In</div>
+                    <div class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</div>
+                </div>
 
-    <div class="container mt-3">
-        <div id="subcat-bar" class="subcat-scroll hidden"></div>
-    </div>
+                <!-- Login Form -->
+                <div id="login-form" class="auth-form active">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="login-username" placeholder="Username">
+                        <label>Username</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="login-password" placeholder="Password"
+                            onkeypress="if(event.key==='Enter')handleLogin()">
+                        <label>Password</label>
+                    </div>
+                    <button class="btn btn-primary btn-auth" onclick="handleLogin()">
+                        <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                    </button>
+                    <p class="text-center mt-3 text-muted small">
+                        Don't have an account? <a href="#" onclick="switchAuthTab('signup')">Sign up</a>
+                    </p>
+                </div>
 
-    <!-- Admin Panel -->
-    <div class="container mt-3 hidden" id="admin-panel">
-        <div class="admin-panel">
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
-                <h5 class="m-0"><i class="fas fa-crown text-warning me-2"></i>Administrator Dashboard</h5>
-                <div class="d-flex gap-2 flex-wrap">
-                    <button class="btn btn-primary" onclick="openEditor()">
-                        <i class="fas fa-plus me-1"></i> New Exercise
-                    </button>
-                    <button class="btn btn-info text-white" onclick="openSubcatManager()">
-                        <i class="fas fa-tags me-1"></i> Subcategories
-                    </button>
-                    <button class="btn btn-secondary" onclick="openSettings()">
-                        <i class="fas fa-cog me-1"></i> Settings
-                    </button>
-                    <button class="btn btn-danger" onclick="logoutAdmin()">
-                        <i class="fas fa-sign-out-alt me-1"></i> Logout
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Stats Row -->
-            <div class="row g-3">
-                <div class="col-6 col-md-3">
-                    <div class="stats-card">
-                        <h3 id="stat-total">0</h3>
-                        <p>Total Exercises</p>
+                <!-- Signup Form -->
+                <div id="signup-form" class="auth-form">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="signup-username" placeholder="Username">
+                        <label>Username</label>
                     </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="stats-card">
-                        <h3 id="stat-solved">0</h3>
-                        <p>Your Solved</p>
+                    <div class="form-floating">
+                        <input type="email" class="form-control" id="signup-email" placeholder="Email">
+                        <label>Email</label>
                     </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="stats-card">
-                        <h3 id="stat-points">0</h3>
-                        <p>Total Points</p>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="signup-password" placeholder="Password">
+                        <label>Password</label>
                     </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="stats-card">
-                        <h3 id="stat-categories">4</h3>
-                        <p>Categories</p>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="signup-confirm" placeholder="Confirm Password"
+                            onkeypress="if(event.key==='Enter')handleSignup()">
+                        <label>Confirm Password</label>
                     </div>
+                    <button class="btn btn-primary btn-auth" onclick="handleSignup()">
+                        <i class="fas fa-user-plus me-2"></i>Create Account
+                    </button>
+                    <p class="text-center mt-3 text-muted small">
+                        Already have an account? <a href="#" onclick="switchAuthTab('login')">Sign in</a>
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container mt-4">
-        <div id="quiz-grid" class="row g-4"></div>
+    <!-- Main App -->
+    <div id="main-app" class="hidden">
+        <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <i class="fas fa-atom fa-spin me-2"></i>SciMaster
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link active" href="#" onclick="setMainFilter('All', this); return false;">All</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="setMainFilter('Math', this); return false;"><i class="fas fa-calculator me-1"></i>Math</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="setMainFilter('Physics', this); return false;"><i class="fas fa-rocket me-1"></i>Physics</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="setMainFilter('Chemistry', this); return false;"><i class="fas fa-flask me-1"></i>Chemistry</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="setMainFilter('Biology', this); return false;"><i class="fas fa-dna me-1"></i>Biology</a></li>
+                    </ul>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="points-display">
+                            <i class="fas fa-trophy"></i> <span id="display-points">0</span>
+                        </div>
+                        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+                            <i class="fas fa-moon" id="theme-icon"></i>
+                        </div>
+                        <div class="user-dropdown">
+                            <div class="user-avatar" onclick="toggleUserDropdown()" id="user-avatar">U</div>
+                            <div class="user-dropdown-menu" id="user-dropdown">
+                                <div class="px-3 py-2 border-bottom mb-2" style="border-color: var(--border-color) !important;">
+                                    <strong id="dropdown-username">Username</strong>
+                                    <small class="d-block text-muted" id="dropdown-email">email@example.com</small>
+                                    <span class="admin-badge mt-1 hidden" id="dropdown-admin-badge">ADMIN</span>
+                                </div>
+                                <a class="user-dropdown-item" onclick="openProfile()">
+                                    <i class="fas fa-user"></i> My Profile
+                                </a>
+                                <a class="user-dropdown-item hidden" id="admin-menu-item" onclick="openAdminPanel()">
+                                    <i class="fas fa-crown text-warning"></i> Admin Panel
+                                </a>
+                                <div class="dropdown-divider my-2" style="border-top: 1px solid var(--border-color);"></div>
+                                <a class="user-dropdown-item danger" onclick="handleLogout()">
+                                    <i class="fas fa-sign-out-alt"></i> Sign Out
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mt-3">
+            <div id="subcat-bar" class="subcat-scroll hidden"></div>
+        </div>
+
+        <!-- Admin Panel (shown in main content for admins) -->
+        <div class="container mt-3 hidden" id="admin-panel">
+            <div class="admin-panel">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                    <h5 class="m-0"><i class="fas fa-crown text-warning me-2"></i>Administrator Dashboard</h5>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <button class="btn btn-primary" onclick="openEditor()">
+                            <i class="fas fa-plus me-1"></i> New Exercise
+                        </button>
+                        <button class="btn btn-info text-white" onclick="openSubcatManager()">
+                            <i class="fas fa-tags me-1"></i> Subcategories
+                        </button>
+                        <button class="btn btn-warning" onclick="openUserManager()">
+                            <i class="fas fa-users me-1"></i> Manage Users
+                        </button>
+                        <button class="btn btn-secondary" onclick="openSettings()">
+                            <i class="fas fa-cog me-1"></i> Settings
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="row g-3">
+                    <div class="col-6 col-md-3">
+                        <div class="stats-card">
+                            <h3 id="stat-total">0</h3>
+                            <p>Total Exercises</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stats-card">
+                            <h3 id="stat-users">0</h3>
+                            <p>Total Users</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stats-card">
+                            <h3 id="stat-responses">0</h3>
+                            <p>Total Responses</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stats-card">
+                            <h3 id="stat-categories">4</h3>
+                            <p>Categories</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-4">
+            <div id="quiz-grid" class="row g-4"></div>
+        </div>
     </div>
 
-    <!-- Login Modal -->
-    <div class="modal fade" id="authModal" tabindex="-1">
-        <div class="modal-dialog modal-sm modal-dialog-centered">
+    <!-- User Manager Modal -->
+    <div class="modal fade" id="userManagerModal" tabindex="-1">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"><i class="fas fa-lock me-2"></i>Admin Access</h5>
+                    <h5 class="modal-title"><i class="fas fa-users me-2"></i>User Management</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="password" id="admin-pass" class="form-control" placeholder="Enter password"
-                        onkeypress="if(event.key==='Enter')verifyAdmin()">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="user-search" placeholder="Search users..." oninput="filterUsers()">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="user-table">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Role</th>
+                                    <th>Points</th>
+                                    <th>Solved</th>
+                                    <th>Joined</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Responses Modal -->
+    <div class="modal fade" id="userResponsesModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-history me-2"></i>User Responses: <span id="response-user-name"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="user-responses-list">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit User Points Modal -->
+    <div class="modal fade" id="editPointsModal" tabindex="-1">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-coins me-2"></i>Edit Points</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="edit-points-uid">
+                    <p class="mb-2">User: <strong id="edit-points-username"></strong></p>
+                    <label class="form-label">Current Points</label>
+                    <div class="input-group mb-3">
+                        <button class="btn btn-outline-danger" onclick="adjustPoints(-10)">-10</button>
+                        <button class="btn btn-outline-danger" onclick="adjustPoints(-1)">-1</button>
+                        <input type="number" id="edit-points-value" class="form-control text-center">
+                        <button class="btn btn-outline-success" onclick="adjustPoints(1)">+1</button>
+                        <button class="btn btn-outline-success" onclick="adjustPoints(10)">+10</button>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary w-100" onclick="verifyAdmin()">
-                        <i class="fas fa-unlock me-1"></i> Unlock
-                    </button>
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" onclick="saveUserPoints()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-user me-2"></i>My Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <div class="user-avatar mx-auto mb-3" style="width: 80px; height: 80px; font-size: 2rem;" id="profile-avatar">U</div>
+                        <h4 id="profile-username">Username</h4>
+                        <p class="text-muted" id="profile-email">email@example.com</p>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <div class="stats-card">
+                                <h3 id="profile-points">0</h3>
+                                <p>Points</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="stats-card">
+                                <h3 id="profile-solved">0</h3>
+                                <p>Solved</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="border-color: var(--border-color);">
+                    <h6 class="mb-3">Recent Activity</h6>
+                    <div id="profile-activity"></div>
                 </div>
             </div>
         </div>
@@ -659,7 +1094,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Category Tabs -->
                     <div class="category-tabs" id="subcat-cat-tabs">
                         <div class="category-tab active" onclick="setSubcatTab('Math')">
                             <i class="fas fa-calculator me-1"></i> Math
@@ -675,7 +1109,6 @@
                         </div>
                     </div>
                     
-                    <!-- Add New -->
                     <div class="input-group mb-3">
                         <input type="text" id="new-subcat-name" class="form-control" placeholder="New subcategory name...">
                         <button class="btn btn-primary" onclick="createSubcat()">
@@ -683,7 +1116,6 @@
                         </button>
                     </div>
                     
-                    <!-- Existing Subcategories -->
                     <div id="subcat-list"></div>
                 </div>
             </div>
@@ -715,13 +1147,6 @@
                             </button>
                             <input type="file" id="import-file" class="hidden" accept=".json" onchange="importData(event)">
                         </div>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <label class="form-label fw-bold">Danger Zone</label>
-                        <button class="btn btn-outline-danger w-100" onclick="resetProgress()">
-                            <i class="fas fa-redo me-1"></i> Reset My Progress
-                        </button>
                     </div>
                 </div>
             </div>
@@ -771,12 +1196,6 @@
                             </label>
                             <div class="latex-toolbar" id="latex-toolbar"></div>
                             
-                            <div class="alert alert-info py-2 mb-3" style="background: var(--bg-tertiary); border: 1px solid var(--border-color); color: var(--text-secondary);">
-                                <i class="fas fa-lightbulb me-1 text-warning"></i>
-                                <strong>Tip:</strong> Use <code style="background: var(--bg-secondary); padding: 2px 6px; border-radius: 4px;">$...$</code> for inline math or 
-                                <code style="background: var(--bg-secondary); padding: 2px 6px; border-radius: 4px;">$$...$$</code> for display math
-                            </div>
-                            
                             <textarea id="ed-q" class="form-control font-monospace mb-3" rows="5" 
                                 placeholder="Example: Find $x$ if $\frac{x^2 + 1}{2} = 5$"
                                 style="font-family: 'JetBrains Mono', monospace;"></textarea>
@@ -793,7 +1212,6 @@
                         <div class="col-12">
                             <label class="form-label fw-bold small text-muted">ACCEPTABLE ANSWERS</label>
                             <input type="text" id="ed-ans" class="form-control" placeholder="Comma separated (e.g. 3, three, 3.0)">
-                            <small class="text-muted">Separate multiple correct answers with commas</small>
                         </div>
                     </div>
                 </div>
@@ -888,21 +1306,15 @@
 
         // ============ STATE ============
         let allExercises = [];
+        let allUsers = {};
         let subCategories = {};
+        let currentUser = null;
         let isAdmin = false;
         let mainFilter = 'All';
         let subFilter = 'All';
-        let userPoints = 0;
-        let userSolved = {};
         let mathJaxReady = false;
         let currentSubcatTab = 'Math';
         let darkMode = localStorage.getItem('darkMode') === 'true';
-
-        let userID = localStorage.getItem('sci_uid');
-        if (!userID) {
-            userID = 'user_' + Math.random().toString(36).substr(2, 9);
-            localStorage.setItem('sci_uid', userID);
-        }
 
         // ============ DARK MODE ============
         function initTheme() {
@@ -946,6 +1358,378 @@
             }, 3000);
         }
 
+        // ============ AUTH FUNCTIONS ============
+        function switchAuthTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            
+            document.querySelector(`.auth-tab:${tab === 'login' ? 'first-child' : 'last-child'}`).classList.add('active');
+            document.getElementById(`${tab}-form`).classList.add('active');
+        }
+
+        async function handleSignup() {
+            const username = document.getElementById('signup-username').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('signup-confirm').value;
+
+            if (!username || !email || !password) {
+                return showToast('Please fill in all fields', 'warning');
+            }
+
+            if (password !== confirm) {
+                return showToast('Passwords do not match', 'error');
+            }
+
+            if (password.length < 6) {
+                return showToast('Password must be at least 6 characters', 'warning');
+            }
+
+            // Check if username exists
+            const snapshot = await db.ref('users').orderByChild('username').equalTo(username).once('value');
+            if (snapshot.exists()) {
+                return showToast('Username already taken', 'error');
+            }
+
+            // Create user
+            const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            const userData = {
+                username,
+                email,
+                password, // In production, hash this!
+                points: 0,
+                role: 'user',
+                createdAt: Date.now(),
+                solved: {},
+                responses: {}
+            };
+
+            await db.ref('users/' + userId).set(userData);
+            
+            localStorage.setItem('sci_uid', userId);
+            localStorage.setItem('sci_user', JSON.stringify({ ...userData, id: userId }));
+            
+            showToast('Account created successfully!', 'success');
+            loginUser({ ...userData, id: userId });
+        }
+
+        async function handleLogin() {
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value;
+
+            if (!username || !password) {
+                return showToast('Please enter username and password', 'warning');
+            }
+
+            // Check for admin
+            if (username === 'admin' && password === 'kyriakos') {
+                const adminUser = {
+                    id: 'admin',
+                    username: 'admin',
+                    email: 'admin@scimaster.com',
+                    role: 'admin',
+                    points: 0
+                };
+                localStorage.setItem('sci_uid', 'admin');
+                localStorage.setItem('sci_user', JSON.stringify(adminUser));
+                showToast('Welcome, Administrator!', 'success');
+                loginUser(adminUser);
+                return;
+            }
+
+            // Check regular users
+            const snapshot = await db.ref('users').orderByChild('username').equalTo(username).once('value');
+            
+            if (!snapshot.exists()) {
+                return showToast('User not found', 'error');
+            }
+
+            let foundUser = null;
+            snapshot.forEach(child => {
+                const user = child.val();
+                if (user.password === password) {
+                    foundUser = { ...user, id: child.key };
+                }
+            });
+
+            if (!foundUser) {
+                return showToast('Incorrect password', 'error');
+            }
+
+            localStorage.setItem('sci_uid', foundUser.id);
+            localStorage.setItem('sci_user', JSON.stringify(foundUser));
+            showToast(`Welcome back, ${foundUser.username}!`, 'success');
+            loginUser(foundUser);
+        }
+
+        function loginUser(user) {
+            currentUser = user;
+            isAdmin = user.role === 'admin';
+            
+            document.getElementById('auth-page').classList.add('hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+            
+            // Update UI
+            document.getElementById('user-avatar').textContent = user.username.charAt(0).toUpperCase();
+            document.getElementById('dropdown-username').textContent = user.username;
+            document.getElementById('dropdown-email').textContent = user.email;
+            document.getElementById('profile-avatar').textContent = user.username.charAt(0).toUpperCase();
+            document.getElementById('profile-username').textContent = user.username;
+            document.getElementById('profile-email').textContent = user.email;
+            
+            if (isAdmin) {
+                document.getElementById('dropdown-admin-badge').classList.remove('hidden');
+                document.getElementById('admin-menu-item').classList.remove('hidden');
+                document.getElementById('admin-panel').classList.remove('hidden');
+            }
+            
+            initializeApp();
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('sci_uid');
+            localStorage.removeItem('sci_user');
+            currentUser = null;
+            isAdmin = false;
+            
+            document.getElementById('main-app').classList.add('hidden');
+            document.getElementById('auth-page').classList.remove('hidden');
+            document.getElementById('admin-panel').classList.add('hidden');
+            
+            // Clear form fields
+            document.getElementById('login-username').value = '';
+            document.getElementById('login-password').value = '';
+            
+            showToast('Signed out successfully', 'info');
+        }
+
+        function checkExistingSession() {
+            const savedUser = localStorage.getItem('sci_user');
+            if (savedUser) {
+                try {
+                    const user = JSON.parse(savedUser);
+                    loginUser(user);
+                    return true;
+                } catch (e) {
+                    localStorage.removeItem('sci_user');
+                    localStorage.removeItem('sci_uid');
+                }
+            }
+            return false;
+        }
+
+        // ============ USER DROPDOWN ============
+        function toggleUserDropdown() {
+            document.getElementById('user-dropdown').classList.toggle('show');
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.user-dropdown')) {
+                document.getElementById('user-dropdown')?.classList.remove('show');
+            }
+        });
+
+        // ============ PROFILE ============
+        function openProfile() {
+            document.getElementById('user-dropdown').classList.remove('show');
+            
+            const solvedCount = currentUser.solved ? Object.keys(currentUser.solved).length : 0;
+            document.getElementById('profile-points').textContent = currentUser.points || 0;
+            document.getElementById('profile-solved').textContent = solvedCount;
+            
+            // Show recent activity
+            const activityDiv = document.getElementById('profile-activity');
+            if (currentUser.responses) {
+                const responses = Object.entries(currentUser.responses)
+                    .sort((a, b) => b[1].timestamp - a[1].timestamp)
+                    .slice(0, 5);
+                
+                if (responses.length > 0) {
+                    activityDiv.innerHTML = responses.map(([key, resp]) => {
+                        const ex = allExercises.find(e => e.id === resp.exerciseId);
+                        return `
+                            <div class="response-item ${resp.correct ? 'response-correct' : 'response-incorrect'}">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>${ex?.cat || 'Unknown'}</strong>
+                                        <small class="text-muted ms-2">${new Date(resp.timestamp).toLocaleDateString()}</small>
+                                    </div>
+                                    <span class="badge ${resp.correct ? 'bg-success' : 'bg-danger'}">
+                                        ${resp.correct ? 'Correct' : 'Incorrect'}
+                                    </span>
+                                </div>
+                                <small class="text-muted">Answer: ${resp.answer}</small>
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    activityDiv.innerHTML = '<p class="text-muted text-center">No activity yet</p>';
+                }
+            } else {
+                activityDiv.innerHTML = '<p class="text-muted text-center">No activity yet</p>';
+            }
+            
+            new bootstrap.Modal(document.getElementById('profileModal')).show();
+        }
+
+        function openAdminPanel() {
+            document.getElementById('user-dropdown').classList.remove('show');
+            document.getElementById('admin-panel').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============ USER MANAGEMENT ============
+        function openUserManager() {
+            renderUsersTable();
+            new bootstrap.Modal(document.getElementById('userManagerModal')).show();
+        }
+
+        function renderUsersTable() {
+            const tbody = document.getElementById('users-table-body');
+            const searchTerm = document.getElementById('user-search')?.value.toLowerCase() || '';
+            
+            let usersArray = Object.entries(allUsers)
+                .filter(([id, user]) => id !== 'admin')
+                .filter(([id, user]) => 
+                    user.username?.toLowerCase().includes(searchTerm) ||
+                    user.email?.toLowerCase().includes(searchTerm)
+                );
+            
+            if (usersArray.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-muted">
+                            No users found
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tbody.innerHTML = usersArray.map(([id, user]) => {
+                const solvedCount = user.solved ? Object.keys(user.solved).length : 0;
+                const responsesCount = user.responses ? Object.keys(user.responses).length : 0;
+                const joinDate = user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A';
+                
+                return `
+                    <tr>
+                        <td>
+                            <div class="user-info">
+                                <div class="user-avatar">${user.username?.charAt(0).toUpperCase() || 'U'}</div>
+                                <div class="user-details">
+                                    <h6>${user.username || 'Unknown'}</h6>
+                                    <small>${user.email || 'No email'}</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            ${user.role === 'admin' ? '<span class="admin-badge">ADMIN</span>' : '<span class="badge bg-secondary">User</span>'}
+                        </td>
+                        <td>
+                            <strong class="text-warning">${user.points || 0}</strong>
+                        </td>
+                        <td>${solvedCount}</td>
+                        <td>${joinDate}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-primary" onclick="viewUserResponses('${id}')" title="View Responses">
+                                    <i class="fas fa-history"></i>
+                                </button>
+                                <button class="btn btn-outline-warning" onclick="editUserPoints('${id}')" title="Edit Points">
+                                    <i class="fas fa-coins"></i>
+                                </button>
+                                <button class="btn btn-outline-danger" onclick="deleteUser('${id}')" title="Delete User">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterUsers() {
+            renderUsersTable();
+        }
+
+        function viewUserResponses(userId) {
+            const user = allUsers[userId];
+            if (!user) return;
+            
+            document.getElementById('response-user-name').textContent = user.username;
+            
+            const container = document.getElementById('user-responses-list');
+            
+            if (!user.responses || Object.keys(user.responses).length === 0) {
+                container.innerHTML = '<p class="text-center text-muted py-4">No responses yet</p>';
+            } else {
+                const responses = Object.entries(user.responses)
+                    .sort((a, b) => b[1].timestamp - a[1].timestamp);
+                
+                container.innerHTML = responses.map(([key, resp]) => {
+                    const ex = allExercises.find(e => e.id === resp.exerciseId);
+                    return `
+                        <div class="response-item ${resp.correct ? 'response-correct' : 'response-incorrect'}">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <span class="badge badge-cat ${ex?.cat || ''}">${ex?.cat || 'Unknown'}</span>
+                                    ${ex?.subcat ? `<span class="badge bg-secondary ms-1">${ex.subcat}</span>` : ''}
+                                </div>
+                                <small class="text-muted">${new Date(resp.timestamp).toLocaleString()}</small>
+                            </div>
+                            <p class="mb-2" style="color: var(--text-primary)"><strong>Question:</strong> ${ex?.q?.substring(0, 100) || 'Deleted exercise'}...</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span><strong>Answer:</strong> ${resp.answer}</span>
+                                <span class="badge ${resp.correct ? 'bg-success' : 'bg-danger'} fs-6">
+                                    ${resp.correct ? '<i class="fas fa-check me-1"></i>Correct' : '<i class="fas fa-times me-1"></i>Incorrect'}
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            new bootstrap.Modal(document.getElementById('userResponsesModal')).show();
+        }
+
+        function editUserPoints(userId) {
+            const user = allUsers[userId];
+            if (!user) return;
+            
+            document.getElementById('edit-points-uid').value = userId;
+            document.getElementById('edit-points-username').textContent = user.username;
+            document.getElementById('edit-points-value').value = user.points || 0;
+            
+            new bootstrap.Modal(document.getElementById('editPointsModal')).show();
+        }
+
+        function adjustPoints(amount) {
+            const input = document.getElementById('edit-points-value');
+            let current = parseInt(input.value) || 0;
+            current += amount;
+            if (current < 0) current = 0;
+            input.value = current;
+        }
+
+        async function saveUserPoints() {
+            const userId = document.getElementById('edit-points-uid').value;
+            const newPoints = parseInt(document.getElementById('edit-points-value').value) || 0;
+            
+            await db.ref('users/' + userId + '/points').set(newPoints);
+            
+            bootstrap.Modal.getInstance(document.getElementById('editPointsModal')).hide();
+            showToast('Points updated successfully', 'success');
+            renderUsersTable();
+        }
+
+        async function deleteUser(userId) {
+            if (!confirm('Are you sure you want to delete this user? This action cannot be undone.')) return;
+            
+            await db.ref('users/' + userId).remove();
+            showToast('User deleted', 'info');
+            renderUsersTable();
+        }
+
         // ============ CATEGORY-SPECIFIC LATEX TOOLBARS ============
         const latexByCategory = {
             Math: [
@@ -967,123 +1751,62 @@
                 { display: '≠', code: '\\neq' },
                 { display: '≤', code: '\\leq' },
                 { display: '≥', code: '\\geq' },
-                { display: '≈', code: '\\approx' },
-                { display: '∈', code: '\\in' },
-                { display: '∉', code: '\\notin' },
-                { display: '⊂', code: '\\subset' },
-                { display: '∪', code: '\\cup' },
-                { display: '∩', code: '\\cap' },
                 { display: 'sin', code: '\\sin(' },
                 { display: 'cos', code: '\\cos(' },
-                { display: 'tan', code: '\\tan(' },
                 { display: 'log', code: '\\log(' },
                 { display: 'ln', code: '\\ln(' },
-                { display: 'eˣ', code: 'e^{x}' },
-                { display: '|x|', code: '|x|' },
-                { display: 'nCr', code: '\\binom{n}{r}' },
-                { display: 'n!', code: 'n!' },
-                { display: 'matrix', code: '\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}' },
             ],
             Physics: [
                 { display: 'v⃗', code: '\\vec{v}' },
                 { display: 'F⃗', code: '\\vec{F}' },
-                { display: 'a⃗', code: '\\vec{a}' },
                 { display: 'ΔE', code: '\\Delta E' },
                 { display: 'Δt', code: '\\Delta t' },
-                { display: 'Δx', code: '\\Delta x' },
                 { display: 'ω', code: '\\omega' },
                 { display: 'θ', code: '\\theta' },
                 { display: 'λ', code: '\\lambda' },
-                { display: 'μ', code: '\\mu' },
                 { display: 'ρ', code: '\\rho' },
-                { display: 'τ', code: '\\tau' },
                 { display: 'ε₀', code: '\\epsilon_0' },
                 { display: 'μ₀', code: '\\mu_0' },
-                { display: 'ℏ', code: '\\hbar' },
                 { display: '∇', code: '\\nabla' },
-                { display: '∂/∂t', code: '\\frac{\\partial}{\\partial t}' },
                 { display: 'F=ma', code: 'F = ma' },
                 { display: 'E=mc²', code: 'E = mc^2' },
                 { display: 'KE', code: '\\frac{1}{2}mv^2' },
-                { display: 'PE', code: 'mgh' },
-                { display: 'p=mv', code: 'p = mv' },
-                { display: 'W', code: 'W = Fd\\cos\\theta' },
                 { display: 'V=IR', code: 'V = IR' },
-                { display: 'P=IV', code: 'P = IV' },
                 { display: 'm/s', code: '\\text{ m/s}' },
                 { display: 'N', code: '\\text{ N}' },
                 { display: 'J', code: '\\text{ J}' },
-                { display: 'W', code: '\\text{ W}' },
-                { display: 'Hz', code: '\\text{ Hz}' },
                 { display: 'Ω', code: '\\Omega' },
-                { display: '°C', code: '^\\circ\\text{C}' },
             ],
             Chemistry: [
                 { display: '→', code: '\\rightarrow' },
                 { display: '⇌', code: '\\rightleftharpoons' },
-                { display: '↑', code: '\\uparrow' },
-                { display: '↓', code: '\\downarrow' },
                 { display: 'H₂O', code: '\\text{H}_2\\text{O}' },
                 { display: 'CO₂', code: '\\text{CO}_2' },
-                { display: 'Δ', code: '\\Delta' },
                 { display: 'ΔH', code: '\\Delta H' },
                 { display: 'ΔG', code: '\\Delta G' },
-                { display: 'ΔS', code: '\\Delta S' },
                 { display: 'Kₐ', code: 'K_a' },
-                { display: 'Kᵦ', code: 'K_b' },
-                { display: 'Kₚ', code: 'K_p' },
                 { display: 'Kc', code: 'K_c' },
                 { display: 'pH', code: '\\text{pH}' },
-                { display: 'pOH', code: '\\text{pOH}' },
-                { display: '-log', code: '-\\log' },
                 { display: '[A]', code: '[\\text{A}]' },
                 { display: 'mol', code: '\\text{ mol}' },
                 { display: 'M', code: '\\text{ M}' },
-                { display: 'g/mol', code: '\\text{ g/mol}' },
-                { display: 'L', code: '\\text{ L}' },
-                { display: 'kJ', code: '\\text{ kJ}' },
-                { display: 'Eₐ', code: 'E_a' },
-                { display: 'n=', code: 'n = \\frac{m}{M}' },
-                { display: 'c=', code: 'c = \\frac{n}{V}' },
                 { display: 'PV=nRT', code: 'PV = nRT' },
                 { display: 'e⁻', code: 'e^-' },
-                { display: 'α', code: '\\alpha' },
-                { display: 'β', code: '\\beta' },
-                { display: 'γ', code: '\\gamma' },
-                { display: '¹⁴C', code: '^{14}\\text{C}' },
             ],
             Biology: [
                 { display: 'DNA', code: '\\text{DNA}' },
                 { display: 'RNA', code: '\\text{RNA}' },
                 { display: 'ATP', code: '\\text{ATP}' },
-                { display: 'ADP', code: '\\text{ADP}' },
-                { display: 'NADH', code: '\\text{NADH}' },
-                { display: 'NAD⁺', code: '\\text{NAD}^+' },
                 { display: 'CO₂', code: '\\text{CO}_2' },
                 { display: 'O₂', code: '\\text{O}_2' },
-                { display: 'H₂O', code: '\\text{H}_2\\text{O}' },
                 { display: 'C₆H₁₂O₆', code: '\\text{C}_6\\text{H}_{12}\\text{O}_6' },
                 { display: '→', code: '\\rightarrow' },
-                { display: '+', code: '+' },
-                { display: 'α', code: '\\alpha' },
-                { display: 'β', code: '\\beta' },
-                { display: 'γ', code: '\\gamma' },
-                { display: 'δ', code: '\\delta' },
-                { display: 'μ', code: '\\mu' },
                 { display: 'μm', code: '\\mu\\text{m}' },
-                { display: 'nm', code: '\\text{ nm}' },
-                { display: 'kDa', code: '\\text{ kDa}' },
-                { display: '×10ⁿ', code: '\\times 10^{n}' },
-                { display: 'pH', code: '\\text{pH}' },
                 { display: 'Km', code: 'K_m' },
                 { display: 'Vmax', code: 'V_{max}' },
-                { display: '[S]', code: '[S]' },
-                { display: 'n/N', code: '\\frac{n}{N}' },
                 { display: 'p²', code: 'p^2' },
                 { display: '2pq', code: '2pq' },
                 { display: 'q²', code: 'q^2' },
-                { display: '%', code: '\\%' },
-                { display: 'Σ', code: '\\Sigma' },
                 { display: 'χ²', code: '\\chi^2' },
             ]
         };
@@ -1186,37 +1909,17 @@
             setTimeout(() => { status.textContent = ''; }, 1000);
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const textarea = document.getElementById('ed-q');
-            if (textarea) {
-                textarea.addEventListener('input', triggerPreview);
-            }
-        });
-
         // ============ SAMPLE EXERCISES ============
         const sampleExercises = {
-            Math: {
-                q: 'Solve for $x$:\n\n$$\\frac{x^2 - 4}{x + 2} = 6$$\n\nHint: Factor the numerator!',
-                ans: '8, eight, 8.0'
-            },
-            Physics: {
-                q: 'A car accelerates from rest at $a = 3 \\text{ m/s}^2$.\n\nFind its velocity after $t = 5 \\text{ s}$.\n\n$$v = v_0 + at$$',
-                ans: '15, 15 m/s'
-            },
-            Chemistry: {
-                q: 'Balance the equation:\n\n$$\\text{Fe} + \\text{O}_2 \\rightarrow \\text{Fe}_2\\text{O}_3$$\n\nWhat coefficient goes in front of Fe?',
-                ans: '4, four'
-            },
-            Biology: {
-                q: 'In a population where $p = 0.6$ (dominant allele):\n\nCalculate the expected frequency of heterozygotes using Hardy-Weinberg:\n\n$$2pq = ?$$',
-                ans: '0.48, 48%'
-            }
+            Math: { q: 'Solve for $x$:\n\n$$\\frac{x^2 - 4}{x + 2} = 6$$', ans: '8, eight' },
+            Physics: { q: 'A car accelerates at $a = 3 \\text{ m/s}^2$. Find velocity after $t = 5 \\text{ s}$.', ans: '15, 15 m/s' },
+            Chemistry: { q: 'Balance: $\\text{Fe} + \\text{O}_2 \\rightarrow \\text{Fe}_2\\text{O}_3$. Coefficient of Fe?', ans: '4, four' },
+            Biology: { q: 'If $p = 0.6$, calculate $2pq$ (Hardy-Weinberg).', ans: '0.48, 48%' }
         };
 
         function insertSampleExercise() {
             const category = document.getElementById('ed-cat').value;
             const sample = sampleExercises[category];
-            
             document.getElementById('ed-q').value = sample.q;
             document.getElementById('ed-ans').value = sample.ans;
             triggerPreview();
@@ -1233,10 +1936,24 @@
         window.onload = async function() {
             initTheme();
             await waitForMathJax();
+            
+            // Attach input listener for preview
+            document.getElementById('ed-q')?.addEventListener('input', triggerPreview);
+            
+            document.getElementById('loading-overlay').classList.add('hidden');
+            
+            // Check for existing session
+            if (!checkExistingSession()) {
+                // Show auth page
+                document.getElementById('auth-page').classList.remove('hidden');
+            }
+        };
+
+        function initializeApp() {
             updateLatexToolbar();
             
+            // Listen for exercises
             db.ref('exercises').on('value', async (snapshot) => {
-                document.getElementById('loading-overlay').classList.add('hidden');
                 const data = snapshot.val();
                 allExercises = [];
                 if (data) {
@@ -1248,33 +1965,49 @@
                 await renderGrid();
             });
 
+            // Listen for subcategories
             db.ref('settings/subcats').on('value', (snap) => {
                 subCategories = snap.val() || {};
                 renderSubcatBar();
                 renderSubcatList();
             });
 
-            db.ref('users/' + userID + '/points').on('value', (snap) => {
-                userPoints = snap.val() || 0;
-                document.getElementById('display-points').innerText = userPoints;
+            // Listen for all users (admin only)
+            db.ref('users').on('value', (snap) => {
+                allUsers = snap.val() || {};
+                updateStats();
+                
+                // Update current user data
+                if (currentUser && currentUser.id !== 'admin' && allUsers[currentUser.id]) {
+                    currentUser = { ...allUsers[currentUser.id], id: currentUser.id };
+                    document.getElementById('display-points').textContent = currentUser.points || 0;
+                }
             });
 
-            db.ref('users/' + userID + '/solved').on('value', async (snap) => {
-                userSolved = snap.val() || {};
-                updateStats();
-                await renderGrid();
-            });
-        };
+            // Listen for current user's points
+            if (currentUser && currentUser.id !== 'admin') {
+                db.ref('users/' + currentUser.id + '/points').on('value', (snap) => {
+                    const points = snap.val() || 0;
+                    document.getElementById('display-points').textContent = points;
+                    if (currentUser) currentUser.points = points;
+                });
+            }
+        }
 
         // ============ STATS ============
         function updateStats() {
             document.getElementById('stat-total').textContent = allExercises.length;
-            document.getElementById('stat-solved').textContent = Object.keys(userSolved).length;
-            document.getElementById('stat-points').textContent = userPoints;
             
-            let cats = new Set();
-            allExercises.forEach(e => cats.add(e.cat));
-            document.getElementById('stat-categories').textContent = cats.size || 4;
+            const userCount = Object.keys(allUsers).filter(k => k !== 'admin').length;
+            document.getElementById('stat-users').textContent = userCount;
+            
+            let totalResponses = 0;
+            Object.values(allUsers).forEach(user => {
+                if (user.responses) {
+                    totalResponses += Object.keys(user.responses).length;
+                }
+            });
+            document.getElementById('stat-responses').textContent = totalResponses;
         }
 
         // ============ RENDER GRID ============
@@ -1298,6 +2031,8 @@
                     </div>`;
                 return;
             }
+
+            const userSolved = currentUser?.solved || {};
 
             const htmlCards = filtered.map(ex => {
                 const isSolved = userSolved[ex.id];
@@ -1362,7 +2097,7 @@
         }
 
         // ============ SUBMIT ANSWER ============
-        function submitAns(id) {
+        async function submitAns(id) {
             const input = document.getElementById('in-' + id);
             const val = input.value.trim().toLowerCase();
             const exercise = allExercises.find(e => e.id === id);
@@ -1377,14 +2112,32 @@
                 a.trim().toLowerCase() === val
             );
 
+            // Log response
+            if (currentUser && currentUser.id !== 'admin') {
+                const responseData = {
+                    exerciseId: id,
+                    answer: val,
+                    correct: isCorrect,
+                    timestamp: Date.now()
+                };
+                await db.ref('users/' + currentUser.id + '/responses').push(responseData);
+            }
+
             if (isCorrect) {
-                db.ref('users/' + userID + '/points').set(userPoints + parseInt(exercise.pts));
-                db.ref('users/' + userID + '/solved/' + id).set(true);
+                if (currentUser && currentUser.id !== 'admin') {
+                    const newPoints = (currentUser.points || 0) + parseInt(exercise.pts);
+                    await db.ref('users/' + currentUser.id + '/points').set(newPoints);
+                    await db.ref('users/' + currentUser.id + '/solved/' + id).set(true);
+                    currentUser.points = newPoints;
+                    currentUser.solved = currentUser.solved || {};
+                    currentUser.solved[id] = true;
+                }
+                
                 input.classList.add('is-valid');
                 showToast(`Correct! +${exercise.pts} points`, 'success');
-                
-                // Add celebration animation
                 input.closest('.card').classList.add('solve-animation');
+                
+                setTimeout(() => renderGrid(), 500);
             } else {
                 input.classList.add('is-invalid');
                 input.value = '';
@@ -1397,32 +2150,7 @@
             }
         }
 
-        // ============ ADMIN ============
-        function toggleAdmin() {
-            if (isAdmin) return;
-            new bootstrap.Modal(document.getElementById('authModal')).show();
-        }
-
-        function verifyAdmin() {
-            if (document.getElementById('admin-pass').value === "admin123") {
-                isAdmin = true;
-                document.getElementById('admin-panel').classList.remove('hidden');
-                renderGrid();
-                bootstrap.Modal.getInstance(document.getElementById('authModal')).hide();
-                document.getElementById('admin-pass').value = '';
-                showToast('Welcome, Administrator!', 'success');
-            } else {
-                showToast('Access Denied', 'error');
-            }
-        }
-
-        function logoutAdmin() {
-            isAdmin = false;
-            document.getElementById('admin-panel').classList.add('hidden');
-            renderGrid();
-            showToast('Logged out', 'info');
-        }
-
+        // ============ EDITOR ============
         function openEditor() {
             updateEditorSubcats();
             updateLatexToolbar();
@@ -1596,6 +2324,7 @@
             const data = {
                 exercises: allExercises,
                 subcategories: subCategories,
+                users: allUsers,
                 exportDate: new Date().toISOString()
             };
             
@@ -1624,12 +2353,16 @@
                     
                     if (data.exercises && Array.isArray(data.exercises)) {
                         data.exercises.forEach(ex => {
-                            const { id, ...rest } = ex;
-                            db.ref('exercises').push(rest);
+                            const { id, ...exData } = ex;
+                            if (id) {
+                                db.ref('exercises/' + id).set(exData);
+                            } else {
+                                db.ref('exercises').push(exData);
+                            }
                         });
                     }
                     
-                    showToast('Data imported!', 'success');
+                    showToast('Data imported successfully!', 'success');
                 } catch (err) {
                     showToast('Invalid file format', 'error');
                 }
@@ -1638,21 +2371,38 @@
             event.target.value = '';
         }
 
-        function resetProgress() {
-            if (confirm('This will reset all your points and solved exercises. Continue?')) {
-                db.ref('users/' + userID).remove();
-                showToast('Progress reset', 'info');
-            }
-        }
-
         // ============ FILTERS ============
         function setMainFilter(cat, el) {
             mainFilter = cat;
             subFilter = 'All';
-            document.querySelectorAll('.navbar-nav .nav-link').forEach(l => l.classList.remove('active'));
+            
+            document.querySelectorAll('.nav-link').forEach(a => a.classList.remove('active'));
             el.classList.add('active');
-            renderSubcatBar();
+            
+            if (cat !== 'All') {
+                document.getElementById('subcat-bar').classList.remove('hidden');
+                renderSubcatBar();
+            } else {
+                document.getElementById('subcat-bar').classList.add('hidden');
+            }
+            
             renderGrid();
+        }
+
+        function renderSubcatBar() {
+            const bar = document.getElementById('subcat-bar');
+            if (!bar || mainFilter === 'All') return;
+            
+            const subcats = subCategories[mainFilter] || {};
+            const subcatValues = Object.values(subcats);
+            
+            let html = `<span class="filter-pill ${subFilter === 'All' ? 'active' : ''}" onclick="setSubFilter('All')">All Topics</span>`;
+            
+            subcatValues.forEach(s => {
+                html += `<span class="filter-pill ${subFilter === s ? 'active' : ''}" onclick="setSubFilter('${s}')">${s}</span>`;
+            });
+            
+            bar.innerHTML = html;
         }
 
         function setSubFilter(sub) {
@@ -1661,31 +2411,216 @@
             renderGrid();
         }
 
-        function renderSubcatBar() {
-            const bar = document.getElementById('subcat-bar');
-            bar.innerHTML = '';
+        // ============ TOGGLE ADMIN ROLE ============
+        async function toggleAdminRole(userId) {
+            const user = allUsers[userId];
+            if (!user) return;
             
-            if (mainFilter === 'All' || !subCategories[mainFilter]) {
-                bar.classList.add('hidden');
-                return;
+            const newRole = user.role === 'admin' ? 'user' : 'admin';
+            
+            if (!confirm(`Change ${user.username}'s role to ${newRole}?`)) return;
+            
+            await db.ref('users/' + userId + '/role').set(newRole);
+            showToast(`${user.username} is now a ${newRole}`, 'success');
+            renderUsersTable();
+        }
+
+        // ============ RESET USER PROGRESS ============
+        async function resetUserProgress(userId) {
+            const user = allUsers[userId];
+            if (!user) return;
+            
+            if (!confirm(`Reset all progress for ${user.username}? This will clear all solved exercises and responses.`)) return;
+            
+            await db.ref('users/' + userId + '/solved').remove();
+            await db.ref('users/' + userId + '/responses').remove();
+            await db.ref('users/' + userId + '/points').set(0);
+            
+            showToast(`${user.username}'s progress has been reset`, 'info');
+            renderUsersTable();
+        }
+
+        // ============ BULK ACTIONS ============
+        async function resetAllUserPoints() {
+            if (!confirm('Reset ALL user points to 0? This cannot be undone!')) return;
+            if (!confirm('Are you REALLY sure? All points will be lost!')) return;
+            
+            const updates = {};
+            Object.keys(allUsers).forEach(uid => {
+                if (uid !== 'admin') {
+                    updates[`users/${uid}/points`] = 0;
+                }
+            });
+            
+            await db.ref().update(updates);
+            showToast('All user points have been reset', 'warning');
+        }
+
+        async function deleteAllExercises() {
+            if (!confirm('Delete ALL exercises? This cannot be undone!')) return;
+            if (!confirm('Are you REALLY sure? All exercises will be permanently deleted!')) return;
+            
+            await db.ref('exercises').remove();
+            showToast('All exercises have been deleted', 'warning');
+        }
+
+        // ============ LEADERBOARD ============
+        function getLeaderboard() {
+            const users = Object.entries(allUsers)
+                .filter(([id, user]) => id !== 'admin' && user.points > 0)
+                .map(([id, user]) => ({
+                    id,
+                    username: user.username,
+                    points: user.points || 0,
+                    solved: user.solved ? Object.keys(user.solved).length : 0
+                }))
+                .sort((a, b) => b.points - a.points)
+                .slice(0, 10);
+            
+            return users;
+        }
+
+        // ============ KEYBOARD SHORTCUTS ============
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + N = New Exercise (admin only)
+            if ((e.ctrlKey || e.metaKey) && e.key === 'n' && isAdmin) {
+                e.preventDefault();
+                openEditor();
             }
             
-            bar.classList.remove('hidden');
+            // Escape = Close dropdowns
+            if (e.key === 'Escape') {
+                document.getElementById('user-dropdown')?.classList.remove('show');
+            }
+        });
 
-            const makePill = (txt, val) => {
-                const s = document.createElement('span');
-                s.className = `filter-pill ${subFilter === val ? 'active' : ''}`;
-                s.innerText = txt;
-                s.onclick = () => setSubFilter(val);
-                return s;
-            };
+        // ============ AUTO-SAVE DRAFT ============
+        let draftSaveTimeout = null;
 
-            bar.appendChild(makePill('All ' + mainFilter, 'All'));
-
-            Object.values(subCategories[mainFilter]).forEach(sub => {
-                bar.appendChild(makePill(sub, sub));
-            });
+        function saveDraft() {
+            clearTimeout(draftSaveTimeout);
+            draftSaveTimeout = setTimeout(() => {
+                const draft = {
+                    q: document.getElementById('ed-q')?.value || '',
+                    ans: document.getElementById('ed-ans')?.value || '',
+                    cat: document.getElementById('ed-cat')?.value || 'Math',
+                    subcat: document.getElementById('ed-subcat')?.value || '',
+                    diff: document.getElementById('ed-diff')?.value || 'medium',
+                    pts: document.getElementById('ed-pts')?.value || '10'
+                };
+                localStorage.setItem('exercise_draft', JSON.stringify(draft));
+            }, 1000);
         }
+
+        function loadDraft() {
+            const saved = localStorage.getItem('exercise_draft');
+            if (saved) {
+                try {
+                    const draft = JSON.parse(saved);
+                    if (draft.q) {
+                        document.getElementById('ed-q').value = draft.q;
+                        document.getElementById('ed-ans').value = draft.ans;
+                        document.getElementById('ed-cat').value = draft.cat;
+                        updateEditorSubcats();
+                        document.getElementById('ed-subcat').value = draft.subcat;
+                        document.getElementById('ed-diff').value = draft.diff;
+                        document.getElementById('ed-pts').value = draft.pts;
+                        triggerPreview();
+                        showToast('Draft restored', 'info');
+                    }
+                } catch (e) {}
+            }
+        }
+
+        function clearDraft() {
+            localStorage.removeItem('exercise_draft');
+        }
+
+        // Add draft saving to editor
+        document.getElementById('ed-q')?.addEventListener('input', saveDraft);
+        document.getElementById('ed-ans')?.addEventListener('input', saveDraft);
+
+        // Clear draft on successful publish
+        const originalPublish = publishExercise;
+        publishExercise = function() {
+            const cat = document.getElementById('ed-cat').value;
+            const subcat = document.getElementById('ed-subcat').value;
+            const difficulty = document.getElementById('ed-diff').value;
+            const pts = document.getElementById('ed-pts').value || 10;
+            const q = document.getElementById('ed-q').value.trim();
+            const ansRaw = document.getElementById('ed-ans').value.trim();
+
+            if (!q) return showToast('Please enter a question', 'warning');
+            if (!ansRaw) return showToast('Please enter at least one answer', 'warning');
+
+            const ans = ansRaw.split(',').map(s => s.trim()).filter(s => s);
+
+            db.ref('exercises').push({
+                cat, 
+                subcat, 
+                difficulty,
+                pts: parseInt(pts), 
+                q, 
+                ans,
+                timestamp: Date.now(),
+                createdBy: currentUser?.username || 'admin'
+            }, (err) => {
+                if (!err) {
+                    bootstrap.Modal.getInstance(document.getElementById('editorModal')).hide();
+                    clearDraft();
+                    showToast('Exercise published!', 'success');
+                } else {
+                    showToast('Error: ' + err.message, 'error');
+                }
+            });
+        };
+
+        // ============ ANALYTICS ============
+        function getAnalytics() {
+            const categoryStats = {};
+            const difficultyStats = { easy: 0, medium: 0, hard: 0 };
+            
+            allExercises.forEach(ex => {
+                categoryStats[ex.cat] = (categoryStats[ex.cat] || 0) + 1;
+                difficultyStats[ex.difficulty || 'medium']++;
+            });
+            
+            let totalResponses = 0;
+            let correctResponses = 0;
+            
+            Object.values(allUsers).forEach(user => {
+                if (user.responses) {
+                    Object.values(user.responses).forEach(resp => {
+                        totalResponses++;
+                        if (resp.correct) correctResponses++;
+                    });
+                }
+            });
+            
+            const accuracy = totalResponses > 0 ? ((correctResponses / totalResponses) * 100).toFixed(1) : 0;
+            
+            return {
+                categoryStats,
+                difficultyStats,
+                totalResponses,
+                correctResponses,
+                accuracy
+            };
+        }
+
+        // ============ RESPONSIVE HANDLING ============
+        window.addEventListener('resize', () => {
+            // Close dropdowns on resize
+            document.getElementById('user-dropdown')?.classList.remove('show');
+        });
+
+        // ============ SERVICE WORKER FOR OFFLINE (Optional) ============
+        if ('serviceWorker' in navigator) {
+            // Uncomment to enable offline support
+            // navigator.serviceWorker.register('/sw.js');
+        }
+
+        console.log('🔬 SciMaster loaded successfully!');
     </script>
 </body>
 </html>
